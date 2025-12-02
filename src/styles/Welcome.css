@@ -1,0 +1,37 @@
+.welcome-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.welcome-card {
+  background: #151c29;
+  border-radius: 12px;
+  padding: 40px 60px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  max-width: 500px;
+  width: 100%;
+}
+
+.welcome-title {
+  font-size: 36px;
+  margin-bottom: 16px;
+  color: #3C83F6;
+}
+
+.welcome-text {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #cfd8eb;
+}
+
+.welcome-subtext {
+  font-size: 14px;
+  color: #8a97b3;
+}

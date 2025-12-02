@@ -1,0 +1,108 @@
+/* Sidebar.css */
+
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background: #0b0f14;
+  border-right: 1px solid #1c2535;
+  padding: 20px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #cfd8e3;
+  font-family: 'Inter', sans-serif;
+}
+
+
+.header a {
+  display: flex;
+  align-items: center;
+  text-decoration: none; /* removes underline */
+  gap: 10px; /* space between icon and text */
+}
+
+.logoIcon img {
+  width: 24px; /* adjust size if needed */
+  height: 24px;
+}
+
+.logoText {
+  color: #fff;
+  font-weight: 700;
+  font-size: 19px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  font-size: 19px;
+  font-weight: 700;
+  gap: 10px;
+  margin-bottom: 25px;
+  padding-left: 6px;
+}
+
+.logoIcon {
+  font-size: 20px;
+  color: #3C83F6;
+}
+
+.logoText {
+  color: #fff;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  padding: 12px 14px;
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+  color: #9aa4b2;
+}
+
+.navItem.active {
+  background: #1D232F;
+  color: #fff;
+}
+
+.navIcon {
+  font-size: 18px;
+}
+
+.composeBtn {
+  background: #3C83F6;
+  color: #fff;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.bottomArea {
+  margin-top: auto;
+  padding-bottom: 10px;
+}
+
+.logoutItem {
+  display: flex;
+  align-items: center;
+  color: #9aa4b2;
+  cursor: pointer;
+  padding: 10px 10px;
+  border-radius: 8px;
+  transition: 0.2s;
+}

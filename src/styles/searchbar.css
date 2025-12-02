@@ -1,0 +1,59 @@
+/* Top wrapper */
+.search-wrapper {
+  position: relative;
+  width: 350px;
+  height: 40px;
+  background: #0f1522;
+  border: 1px solid #1f2937;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  padding-left: 40px;
+  transition: 0.2s ease;
+}
+
+.search-wrapper:hover {
+  border-color: #3b82f6;
+}
+
+/* Search Icon */
+.search-icon {
+  position: absolute;
+  left: 12px;
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+/* Input */
+.search-input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 14px;
+  outline: none;
+}
+
+/* --- RESPONSIVE --- */
+
+/* Laptop 15.3" size (1000–1400px) */
+@media (max-width: 1400px) {
+  .search-wrapper {
+    width: 300px;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .search-wrapper {
+    width: 260px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .search-wrapper {
+    width: 100%;
+  }
+}
