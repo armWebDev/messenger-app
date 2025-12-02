@@ -1,0 +1,105 @@
+.friends-container {
+  font-family: 'Inter', sans-serif;
+  padding: 0px 20px;
+  color: #fff;
+  height: 100%;
+  background: #131720;
+}
+
+.friends-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.friends-header h2 {
+  font-size: 28px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.add-friend-btn {
+  background: #3C83F6;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 600;
+}
+
+.friends-box {
+    border: 1px solid #333C4D;
+    padding: 20px;
+    border-radius: 8px;
+    background: #1D232F;
+    height: 440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Friend List */
+.friend-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid #2b3745;
+}
+
+.friend-row:last-child {
+  border-bottom: none;
+}
+
+.friend-info {
+  display: flex;
+  align-items: center;
+}
+
+.friend-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  margin-right: 14px;
+}
+
+.friend-name {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.write-btn {
+  background: none;
+  border: none;
+  color: #4a90e2;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Empty State */
+.friends-empty-state {
+  text-align: center;
+  padding: 60px 10px;
+  opacity: 0.8;
+}
+
+.friends-empty-icon {
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+
+.friends-empty-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.friends-empty-text {
+  font-size: 14px;
+  color: #ccc;
+}
