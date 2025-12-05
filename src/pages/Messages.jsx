@@ -1,26 +1,29 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";   // ← ADD THIS!
 import "./Messages.css";
 import envIcon from "../assets/Vector.svg";
 import emptyMassage from "../assets/emptyMassage.svg";
 import { messages } from "../data/message";
+import ComposeMessage from "./ComposeMessage";
 
 export default function Messages() {
   const itemsPerPage = 6;
   const [activeTab, setActiveTab] = useState("inbox");
   const [page, setPage] = useState(1);
 
-  // Filter messages by active tab
+  const [showCompose, setShowCompose] = useState(false);
   const tabMessages = messages.filter((m) => m.type === activeTab);
   const totalPages = Math.ceil(tabMessages.length / itemsPerPage);
 
-  // Reset page to 1 when tab changes
   useEffect(() => {
     setPage(1);
   }, [activeTab]);
 
-  // Slice messages for current page
   const startIndex = (page - 1) * itemsPerPage;
-  const currentMessages = tabMessages.slice(startIndex, startIndex + itemsPerPage);
+  const currentMessages = tabMessages.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
 
   const hasMessages = currentMessages.length > 0;
 
@@ -29,18 +32,26 @@ export default function Messages() {
     setPage(newPage);
   };
 
+  if (showCompose) {
+    return <ComposeMessage onClose={() => setShowCompose(false)} />;
+  }
+
   return (
     <div className="messages-wrapper">
-      {/* Header */}
       <div className="messages-header-row">
         <div className="messages-header-left">
           <img src={envIcon} className="messages-header-icon" alt="" />
           <h2 className="messages-header-title">Messages</h2>
         </div>
-        <button className="messages-compose-button">COMPOSE</button>
+
+        <button
+          className="messages-compose-button"
+          onClick={() => setShowCompose(true)}
+        >
+          COMPOSE
+        </button>
       </div>
 
-      {/* Tabs */}
       <div className="messages-tabs">
         {["inbox", "sent", "received"].map((tab) => (
           <button
@@ -53,7 +64,6 @@ export default function Messages() {
         ))}
       </div>
 
-      {/* Messages Box */}
       <div className={`messages-content-box ${!hasMessages ? "empty" : ""}`}>
         {!hasMessages ? (
           <div className="messages-empty-state">
@@ -65,25 +75,26 @@ export default function Messages() {
           </div>
         ) : (
           <>
-            {/* Message List */}
             <div className="messages-list">
               {currentMessages.map((m, idx) => (
-                <div key={`${m.id}-${idx}`} className="message-row">
+                <Link
+                  to={`/messages/${m.id}`} 
+                  key={`${m.id}-${idx}`}
+                  className="message-row"
+                >
                   <div className="message-left">
                     <div className="message-from">{m.from}</div>
                     <div className="message-subject">{m.title}</div>
                   </div>
-                  <div className="message-right">
-                    {m.isNew && <span className="message-new">New</span>}
-                    <span className="message-date">{m.date}</span>
-                  </div>
-                </div>
+                </Link>
               ))}
             </div>
 
-            {/* Pagination */}
             <div className="messages-pagination">
-              <button onClick={() => changePage(page - 1)} disabled={page === 1}>
+              <button
+                onClick={() => changePage(page - 1)}
+                disabled={page === 1}
+              >
                 &lt;
               </button>
 

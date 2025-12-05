@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import protectIcon from "../assets/svg.svg";
 import data from "../../local.json";
@@ -10,11 +10,21 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // 🔥 Auto-hide error after 2 seconds
+  useEffect(() => {
+    if (!error) return;
+
+    const timer = setTimeout(() => {
+      setError("");
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [error]);
+
   const handleLogin = (e) => {
     e.preventDefault();
 
     const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
-
     const users = [...storedUsers, ...data.users];
 
     const user = users.find(
@@ -23,6 +33,7 @@ export default function Login() {
 
     if (user) {
       localStorage.setItem("currentUser", JSON.stringify(user));
+      localStorage.setItem("isLoggedIn", "true");
       setError("");
       navigate("/welcome");
     } else {
@@ -38,9 +49,7 @@ export default function Login() {
         </div>
 
         <h1 className="auth-main-title">Secure Data Transfer</h1>
-        <p className="auth-subtitle">
-          End-to-end encrypted messaging platform
-        </p>
+        <p className="auth-subtitle">End-to-end encrypted messaging platform</p>
 
         <div className="auth-tabs">
           <a href="/login" className="auth-tab active">Login</a>
@@ -68,9 +77,7 @@ export default function Login() {
 
           {error && <p className="auth-error">{error}</p>}
 
-          <button type="submit" className="auth-button">
-            Login
-          </button>
+          <button type="submit" className="auth-button">Login</button>
         </form>
       </div>
     </div>

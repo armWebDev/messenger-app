@@ -15,8 +15,7 @@
   padding: 40px 60px;
   text-align: center;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  max-width: 500px;
-  width: 100%;
+  min-width: 500px;
 }
 
 .welcome-title {

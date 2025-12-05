@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import myIcon from "../assets/svg.svg";
-import data from "../../local.json"; 
+import data from "../../local.json";
 import "./../styles/auth.css";
 
 export default function Signup() {
@@ -11,11 +11,27 @@ export default function Signup() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!error) return;
+
+    const timer = setTimeout(() => {
+      setError("");
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [error]);
+
   const handleSignup = (e) => {
     e.preventDefault();
 
     if (!name || !email || !password) {
       setError("All fields are required");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address");
       return;
     }
 
@@ -29,9 +45,10 @@ export default function Signup() {
 
     const newUser = {
       id: storedUsers.length ? storedUsers[storedUsers.length - 1].id + 1 : 1,
+      fullName: name,
       username: email,
       password: password,
-      friends: []
+      friends: [],
     };
 
     const updatedUsers = [...storedUsers, newUser];
@@ -49,14 +66,20 @@ export default function Signup() {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <div className="auth-icon"><img src={myIcon} alt="" /></div>
+        <div className="auth-icon">
+          <img src={myIcon} alt="" />
+        </div>
 
         <h1 className="auth-main-title">Secure Data Transfer</h1>
         <p className="auth-subtitle">End-to-end encrypted messaging platform</p>
 
-        <div className="auth-tabs"> 
-          <a href="/login" className="auth-tab">Login</a>
-          <a href="/signup" className="auth-tab active">Sign Up</a>
+        <div className="auth-tabs">
+          <a href="/login" className="auth-tab">
+            Login
+          </a>
+          <a href="/signup" className="auth-tab active">
+            Sign Up
+          </a>
         </div>
 
         <form onSubmit={handleSignup} className="auth-form">

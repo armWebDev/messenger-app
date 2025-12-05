@@ -1,7 +1,7 @@
 body, html {
   height: 100%;
   margin: 0;
-  overflow: hidden; /* disables scrolling */
+  overflow: hidden; 
 }
 
 .auth-container {
@@ -11,6 +11,13 @@ body, html {
   align-items: center;
   background: #0b0f1a;
   font-family: "Inter", sans-serif;
+}
+
+.auth-error{
+  background: #3a7bd5;
+  padding: 8px 16px;
+  display: inline-block;
+  border-radius: 8px;
 }
 
 .auth-card {
