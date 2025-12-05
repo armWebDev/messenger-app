@@ -3,9 +3,9 @@
   font-family: "Inter", sans-serif;
   background: #131720;
   color: white;
+  height: 100%;
 }
 
-/* Header */
 .messages-header-row {
   display: flex;
   justify-content: space-between;
@@ -37,11 +37,16 @@
   cursor: pointer;
 }
 
-/* Tabs */
 .messages-tabs {
-  display: flex;
+  display: inline-flex;
+  align-items: center;
   gap: 8px;
   margin-bottom: 15px;
+  background: #1d232f;
+  padding: 8px 16px;
+  border: 1px solid #333c4d;
+  border-radius: 8px;
+  width: fit-content; 
 }
 
 .messages-tab {
@@ -59,19 +64,17 @@
   color: white;
 }
 
-/* Main box */
 .messages-content-box {
   background: #1d232f;
   border: 1px solid #333c4d;
-  height: 500px;
   border-radius: 8px;
+  height: 500px;
   overflow: hidden;
   position: relative;
   display: flex;
   flex-direction: column;
 }
 
-/* EMPTY MODE */
 .messages-content-box.empty {
   justify-content: center;
   align-items: center;
@@ -87,7 +90,6 @@
   color: white;
 }
 
-/* LIST MODE */
 .messages-list {
   overflow-y: auto;
   padding-top: 10px;
@@ -108,6 +110,7 @@
   justify-content: space-between;
   cursor: pointer;
   transition: 0.2s;
+  text-decoration: none;
 }
 
 .message-row:hover {
@@ -125,12 +128,6 @@
   color: #d7e3ff;
 }
 
-.message-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .message-new {
   background: #3c83f6;
   padding: 2px 8px;
@@ -144,7 +141,6 @@
   font-size: 13px;
 }
 
-/* Pagination */
 .messages-pagination {
   padding: 14px;
   border-top: 1px solid #262f3a;
