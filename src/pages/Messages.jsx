@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";   // ← ADD THIS!
-import "./Messages.css";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/Messages.css";
 import envIcon from "../assets/Vector.svg";
 import emptyMassage from "../assets/emptyMassage.svg";
 import { messages } from "../data/message";
@@ -10,9 +10,25 @@ export default function Messages() {
   const itemsPerPage = 6;
   const [activeTab, setActiveTab] = useState("inbox");
   const [page, setPage] = useState(1);
-
   const [showCompose, setShowCompose] = useState(false);
-  const tabMessages = messages.filter((m) => m.type === activeTab);
+  const [sentMessages, setSentMessages] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedSentMessages =
+      JSON.parse(localStorage.getItem("messages")) || [];
+    setSentMessages(storedSentMessages);
+  }, []);
+
+  const getTabMessages = () => {
+    if (activeTab === "sent") {
+      const staticSentMessages = messages.filter((m) => m.type === "sent");
+      return [...staticSentMessages, ...sentMessages];
+    }
+    return messages.filter((m) => m.type === activeTab);
+  };
+
+  const tabMessages = getTabMessages();
   const totalPages = Math.ceil(tabMessages.length / itemsPerPage);
 
   useEffect(() => {
@@ -24,7 +40,6 @@ export default function Messages() {
     startIndex,
     startIndex + itemsPerPage
   );
-
   const hasMessages = currentMessages.length > 0;
 
   const changePage = (newPage) => {
@@ -32,8 +47,19 @@ export default function Messages() {
     setPage(newPage);
   };
 
+  const handleSendMessage = (newMessage) => {
+    const updatedSentMessages = [...sentMessages, newMessage];
+    localStorage.setItem("messages", JSON.stringify(updatedSentMessages));
+    setSentMessages(updatedSentMessages);
+  };
+
   if (showCompose) {
-    return <ComposeMessage onClose={() => setShowCompose(false)} />;
+    return (
+      <ComposeMessage
+        onSendMessage={handleSendMessage}
+        onClose={() => setShowCompose(false)}
+      />
+    );
   }
 
   return (
@@ -44,20 +70,23 @@ export default function Messages() {
           <h2 className="messages-header-title">Messages</h2>
         </div>
 
-        <button
-          className="messages-compose-button"
-          onClick={() => setShowCompose(true)}
-        >
+        <Link to="/compose" className="messages-compose-button">
           COMPOSE
-        </button>
+        </Link>
       </div>
 
       <div className="messages-tabs">
-        {["inbox", "sent", "received"].map((tab) => (
+        {["inbox", "sent"].map((tab) => (
           <button
             key={tab}
             className={`messages-tab ${activeTab === tab ? "active" : ""}`}
-            onClick={() => setActiveTab(tab)}
+            onClick={() => {
+              if (tab === "sent") {
+                navigate("/compose"); 
+                return;
+              }
+              setActiveTab(tab);
+            }}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
           </button>
@@ -78,7 +107,7 @@ export default function Messages() {
             <div className="messages-list">
               {currentMessages.map((m, idx) => (
                 <Link
-                  to={`/messages/${m.id}`} 
+                  to={`/messages/${m.id}`}
                   key={`${m.id}-${idx}`}
                   className="message-row"
                 >

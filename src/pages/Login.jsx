@@ -10,7 +10,6 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // 🔥 Auto-hide error after 2 seconds
   useEffect(() => {
     if (!error) return;
 

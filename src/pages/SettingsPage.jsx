@@ -27,7 +27,6 @@ export default function SettingsPage() {
     const allUsers = JSON.parse(localStorage.getItem("users")) || [];
     let updatedPassword = storedUser.password;
 
-    // Validate password change
     if (currentPassword || newPassword || confirmPassword) {
       if (currentPassword !== storedUser.password) {
         alert("Current password is incorrect!");
@@ -81,7 +80,7 @@ export default function SettingsPage() {
 
         <div className="settings-profile-row">
           <img
-            src="https://i.pravatar.cc/200?img=12"
+            src="../../src/assets/avatar1.png"
             alt="avatar"
             className="settings-profile-img"
           />

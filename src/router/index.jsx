@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
@@ -12,9 +12,11 @@ import EncryptionPage from "../pages/EncryptionPage";
 import SettingsPage from "../pages/SettingsPage";
 import ProtectedRoute from "../pages/ProtectedRoute";
 import MessageView from "../pages/MessageView";
+import ComposeMessage from "../pages/ComposeMessage";
 
 
 export default function AppRouter() {
+
   return (
     <BrowserRouter>
       <Routes>
@@ -51,6 +53,14 @@ export default function AppRouter() {
             element={
               <ProtectedRoute>
                 <Messages />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/compose"
+            element={
+              <ProtectedRoute>
+                <ComposeMessage />
               </ProtectedRoute>
             }
           />

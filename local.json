@@ -1,6 +1,7 @@
 {
   "users": [
-    { "id": 1, "username": "armen@gmail.com", "name": "Armen", "password": "1234", "friends": ["Anna", "Mike"] },
-    { "id": 2, "username": "lena", "password": "abcd", "friends": ["John"] }
+    { "id": 1, "username": "armen@gmail.com", "fullName": "Armen Tadevosyan", "password": "1234", "friends": ["Anna", "Mike"] },
+    { "id": 2, "username": "lena", "password": "abcd", "friends": ["John"] },
+    { "id": 3, "username": "liana@gmail.com", "fullName": "LIana Liana", "password": "1234", "friends": ["Anna", "Mike"] }
   ]
 }

@@ -6,6 +6,19 @@
   font-family: "Inter", sans-serif;
 }
 
+.send-btn {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transition: 0.2s;
+}
+
+.send-btn.active {
+  opacity: 1;
+  cursor: pointer;
+  background: #4c8bf5 !important;
+  color: white !important;
+}
+
 .compose-title {
   font-size: 28px;
   font-weight: 700;
@@ -13,6 +26,11 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.lockIconSmal {
+  height: 16px;
+  width: 16px;
 }
 
 .compose-header {
@@ -53,16 +71,16 @@
 .textarea-field {
   width: 100%;
   background: #151c29;
-  border: 1px solid #2a3445;  
+  border: 1px solid #2a3445;
   padding: 12px 14px;
-  margin-top: 8px;             
-  border-radius: 8px;         
+  margin-top: 8px;
+  border-radius: 8px;
   color: #d7e3ff;
   font-size: 15px;
   line-height: 1.25;
   box-sizing: border-box;
   transition: border-color 160ms ease, box-shadow 160ms ease, transform 120ms ease;
-  outline: none;           
+  outline: none;
 }
 
 .input-field::placeholder,
@@ -73,7 +91,7 @@
 
 .textarea-field {
   min-height: 180px;
-  resize: vertical;           
+  resize: vertical;
   padding-top: 12px;
   padding-bottom: 12px;
 }
@@ -82,7 +100,7 @@
 .textarea-field:focus {
   border-color: #3c83f6;
   box-shadow: 0 6px 18px rgba(12, 20, 30, 0.25),
-              0 0 0 6px rgba(60, 131, 246, 0.06); 
+    0 0 0 6px rgba(60, 131, 246, 0.06);
   transform: translateY(-1px);
 }
 
@@ -112,6 +130,9 @@
   font-size: 13px;
   color: #9aa4b2;
   border-radius: 6px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .btn-row {

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import myIcon from "../assets/svg.svg";
 import data from "../../local.json";
+import emailjs from "@emailjs/browser"; 
 import "./../styles/auth.css";
 
 export default function Signup() {
@@ -9,17 +10,23 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [codeSent, setCodeSent] = useState(false);
+  const [verificationCode, setVerificationCode] = useState("");
+  const [inputCode, setInputCode] = useState("");
+
   const navigate = useNavigate();
 
   useEffect(() => {
+    emailjs.init("LKYqPPj3YkXL0TbTV");
+  }, []);
+
+  useEffect(() => {
     if (!error) return;
-
-    const timer = setTimeout(() => {
-      setError("");
-    }, 2000);
-
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setError(""), 2000);
+    return () => clearTimeout(t);
   }, [error]);
+
+  const generateCode = () => Math.floor(100000 + Math.random() * 900000);
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -36,31 +43,65 @@ export default function Signup() {
     }
 
     const storedUsers = JSON.parse(localStorage.getItem("users")) || data.users;
-
-    const exists = storedUsers.find((u) => u.username === email);
-    if (exists) {
+    if (storedUsers.find((u) => u.username === email)) {
       setError("User with this email already exists");
       return;
     }
 
-    const newUser = {
-      id: storedUsers.length ? storedUsers[storedUsers.length - 1].id + 1 : 1,
-      fullName: name,
-      username: email,
-      password: password,
-      friends: [],
-    };
+    const code = generateCode();
+    setVerificationCode(code);
 
-    const updatedUsers = [...storedUsers, newUser];
+    localStorage.setItem(
+      "tempUser",
+      JSON.stringify({ name, email, password, code })
+    );
 
-    localStorage.setItem("users", JSON.stringify(updatedUsers, null, 2));
+    const expirationTime = new Date(Date.now() + 15 * 60000).toLocaleTimeString(
+      [],
+      { hour: "2-digit", minute: "2-digit" }
+    );
 
-    setName("");
-    setEmail("");
-    setPassword("");
-    setError("");
-    alert("Account created successfully!");
-    navigate("/login");
+    emailjs
+      .send("service_u3nne0i", "template_kpofckr", {
+        passcode: code,
+        time: expirationTime,
+        email: email,
+      })
+      .then(() => {
+        setCodeSent(true);
+      })
+      .catch(() => {
+        setError("Failed to send verification code");
+      });
+  };
+
+  const handleVerifyCode = () => {
+    const tempUser = JSON.parse(localStorage.getItem("tempUser"));
+    if (!tempUser) return setError("No signup in progress");
+
+    if (parseInt(inputCode) === tempUser.code) {
+      const storedUsers =
+        JSON.parse(localStorage.getItem("users")) || data.users;
+
+      const newUser = {
+        id: storedUsers.length ? storedUsers[storedUsers.length - 1].id + 1 : 1,
+        fullName: tempUser.name,
+        username: tempUser.email,
+        password: tempUser.password,
+        friends: [],
+      };
+
+      localStorage.setItem(
+        "users",
+        JSON.stringify([...storedUsers, newUser], null, 2)
+      );
+      localStorage.removeItem("tempUser");
+
+      alert("Account verified and created!");
+      navigate("/login");
+    } else {
+      setError("Verification code is incorrect");
+    }
   };
 
   return (
@@ -82,35 +123,51 @@ export default function Signup() {
           </a>
         </div>
 
-        <form onSubmit={handleSignup} className="auth-form">
-          <label className="auth-label">Your Name</label>
-          <input
-            className="auth-input"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+        {!codeSent ? (
+          <form onSubmit={handleSignup} className="auth-form">
+            <label className="auth-label">Your Name</label>
+            <input
+              className="auth-input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
 
-          <label className="auth-label">Email</label>
-          <input
-            className="auth-input"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+            <label className="auth-label">Email</label>
+            <input
+              className="auth-input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-          <label className="auth-label">Password</label>
-          <input
-            className="auth-input"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+            <label className="auth-label">Password</label>
+            <input
+              className="auth-input"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-          {error && <p className="auth-error">{error}</p>}
+            {error && <p className="auth-error">{error}</p>}
 
-          <button type="submit" className="auth-button">
-            Sign Up
-          </button>
-        </form>
+            <button type="submit" className="auth-button">
+              Sign Up
+            </button>
+          </form>
+        ) : (
+          <div className="auth-form">
+            <p className="auth-error">Check your email for the verification code!</p>
+            <input
+              className="auth-input"
+              placeholder="Enter verification code"
+              value={inputCode}
+              onChange={(e) => setInputCode(e.target.value)}
+            />
+            <button onClick={handleVerifyCode} className="auth-button">
+              Verify Code
+            </button>
+            {error && <p className="auth-error">{error}</p>}
+          </div>
+        )}
       </div>
     </div>
   );

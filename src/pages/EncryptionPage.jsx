@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./EncryptionPage.css";
+import '../styles/EncryptionPage.css'
 import lockTop from "../assets/lockTop.svg"
 
 export default function EncryptionPage() {

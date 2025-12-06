@@ -35,6 +35,7 @@
   font-weight: 600;
   color: white;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .messages-tabs {
